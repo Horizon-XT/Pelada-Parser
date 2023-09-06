@@ -1,3 +1,5 @@
+mod file;
+
 fn main() {
-    println!("Hello, world!");
+    file::read_file("sample.dat");
 }
