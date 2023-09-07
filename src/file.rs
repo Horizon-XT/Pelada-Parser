@@ -1,5 +1,5 @@
-//use std::fs::File;
-//use std::io::{self, Read};
+use std::fs;
+use std::io;
 
 fn split_extension(filename: &str) -> &str {
     let delimiter: &str = ".";
@@ -23,14 +23,25 @@ fn is_valid_extension(ext: &str) -> bool {
     }
 } 
 
-pub fn read_file(filename: &str) {
-    println!("read file: {}", filename);
+fn read_io(filename: &str) -> String {
+    let result: Result<String, io::Error> = fs::read_to_string(filename);
 
+    match result {
+        Ok(content) => {
+            return content;
+        }
+        Err(error) => {
+            panic!("Error reading {}!\nError: {}", filename, error);
+        }
+    }
+}
+
+pub fn read_file(filename: &str) -> String {
     let ext: &str = split_extension(filename);
 
     if is_valid_extension(ext) {
-        println!("the extension {} is valid? true", ext);
+        return read_io(filename);
     } else {
-        println!("the extension {} is valid? false", ext);
+        panic!("Please, input a valid file! [.dat, .txt]");
     }
 } 

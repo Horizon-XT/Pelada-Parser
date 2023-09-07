@@ -1,5 +1,7 @@
 mod file;
 
 fn main() {
-    file::read_file("sample.dat");
+    let content: &str = &file::read_file("samples/sample.dat");
+
+    println!("File content: {}", content);
 }
