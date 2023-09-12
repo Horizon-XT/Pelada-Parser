@@ -10,22 +10,23 @@ impl ParserStringOps for String {
     }    
 }
 
-// Removes the green marked emoji, the numbers and trim the whitespaces
+// Removes the green mark emoji, the numbers and trim the whitespaces
 fn pre_process(raw_content: Lines) -> Vec<String> {
     raw_content
-        .map(|line| -> String { line.replace("✅", "") })
         .map(|line| -> String {
-            let filtered_names: Vec<&str> = line.split(".").collect();
-            match filtered_names.last() {
+            let no_emoji_name: String = line.replace("✅", "");
+           
+            let splitted_by_dot_name: Vec<&str> = no_emoji_name.split(".").collect();
+            
+            match splitted_by_dot_name.last() {
                 Some(name) => {
-                    return name.to_string();
+                    return name.trim().to_string();
                 }
                 None => {
                     return "".to_string();
                 }
             }
         })
-        .map(|line| -> String { line.trim().to_string() })
         .collect()
 }
 
