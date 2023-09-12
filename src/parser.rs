@@ -27,6 +27,7 @@ fn pre_process(raw_content: Lines) -> Vec<String> {
                 }
             }
         })
+        .filter(|line| -> bool { line != "" })
         .collect()
 }
 
