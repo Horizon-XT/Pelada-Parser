@@ -1,15 +1,5 @@
 use std::str::Lines;
 
-trait ParserStringOps {
-    fn remove_marked_emoji(&self) -> String;
-}
-
-impl ParserStringOps for String {
-    fn remove_marked_emoji(&self) -> String {
-        self.replace("✅", "")
-    }    
-}
-
 // Removes the green mark emoji, the numbers and trim the whitespaces
 fn pre_process(raw_content: Lines) -> Vec<String> {
     raw_content
@@ -31,12 +21,12 @@ fn pre_process(raw_content: Lines) -> Vec<String> {
         .collect()
 }
 
-pub fn run(content: &str) {
+pub fn run(content: &str) -> Vec<String> {
     let lines: Lines = content.lines();
 
-    let parsed_lines: Vec<String> = pre_process(lines);
+    let mut parsed_list: Vec<String> = pre_process(lines);
 
-    for line in parsed_lines {
-        println!("{}", line)
-    }
+    parsed_list.remove(0);
+
+    parsed_list
 }
