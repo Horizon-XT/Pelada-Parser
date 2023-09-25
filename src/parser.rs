@@ -7,9 +7,9 @@ fn pre_process(raw_content: Lines) -> Vec<String> {
             let no_emoji_name: String = line.replace("✅", "");
 
             let no_colon_name: String = no_emoji_name.replace(":", "");
-           
+
             let splitted_by_dot_name: Vec<&str> = no_colon_name.split(".").collect();
-            
+
             match splitted_by_dot_name.last() {
                 Some(name) => {
                     return name.trim().to_string();

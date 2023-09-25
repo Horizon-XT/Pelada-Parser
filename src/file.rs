@@ -21,7 +21,7 @@ fn is_valid_extension(ext: &str) -> bool {
         "dat" | "txt" => true,
         _ => false,
     }
-} 
+}
 
 fn read_io(filename: &str) -> String {
     let result: Result<String, io::Error> = fs::read_to_string(filename);
@@ -44,4 +44,4 @@ pub fn read_file(filename: &str) -> String {
     } else {
         panic!("Please, input a valid file! [.dat, .txt]");
     }
-} 
+}
