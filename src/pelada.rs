@@ -12,11 +12,11 @@ const GUEST: [&str; 8] = [
 ];
 const KID: [&str; 3] = ["sub 15", "menores", "menor"];
 
-struct PeladaType {
-    goalkeepers: Vec<String>,
-    players: Vec<String>,
-    guests: Vec<String>,
-    kids: Vec<String>,
+pub struct PeladaType {
+    pub goalkeepers: Vec<String>,
+    pub players: Vec<String>,
+    pub guests: Vec<String>,
+    pub kids: Vec<String>,
 }
 
 fn list_to_lower(list: Vec<String>) -> Vec<String> {
@@ -39,10 +39,10 @@ fn get_keyword(group: &[&str], list: &Vec<String>) -> Option<String> {
 }
 
 fn keywords(list: &Vec<String>) -> (String, String, String, String) {
-    let mut gk_keyword = String::from("");
-    let mut pl_keyword = String::from("");
-    let mut gt_keyword = String::from("");
-    let mut kd_keyword = String::from("");
+    let gk_keyword: String;
+    let pl_keyword: String;
+    let gt_keyword: String;
+    let kd_keyword: String;
 
     match get_keyword(&GOALKEEPER, &list) {
         Some(keyword) => {
@@ -106,31 +106,25 @@ fn sublist(from: &String, to: &String, list: &Vec<String>) -> Vec<String> {
     }
 }
 
-pub fn from(list: Vec<String>) {
+pub fn from(list: Vec<String>) -> PeladaType {
     let lowered_list: Vec<String> = list_to_lower(list);
 
     let (gk_keyword, pl_keyword, gt_keyword, kd_keyword) = keywords(&lowered_list);
 
-    println!("Keyword: {}", &gk_keyword);
-    println!("Keyword: {}", &pl_keyword);
-    println!("Keyword: {}", &gt_keyword);
-    println!("Keyword: {}", &kd_keyword);
+    //println!("Keyword: {}", &gk_keyword);
+    //println!("Keyword: {}", &pl_keyword);
+    //println!("Keyword: {}", &gt_keyword);
+    //println!("Keyword: {}", &kd_keyword);
 
-    let mut gk = sublist(&gk_keyword, &pl_keyword, &lowered_list);
-    let mut pl = sublist(&pl_keyword, &gt_keyword, &lowered_list);
-    let mut gt = sublist(&gt_keyword, &kd_keyword, &lowered_list);
-    let mut kd = sublist(&kd_keyword, &String::from(""), &lowered_list);
+    let gk = sublist(&gk_keyword, &pl_keyword, &lowered_list);
+    let pl = sublist(&pl_keyword, &gt_keyword, &lowered_list);
+    let gt = sublist(&gt_keyword, &kd_keyword, &lowered_list);
+    let kd = sublist(&kd_keyword, &String::from(""), &lowered_list);
 
-    for element in &gk {
-        println!("{}", element)
-    }
-    for element in &pl {
-        println!("{}", element)
-    }
-    for element in &gt {
-        println!("{}", element)
-    }
-    for element in &kd {
-        println!("{}", element)
+    PeladaType {
+        goalkeepers: gk,
+        players: pl,
+        guests: gt,
+        kids: kd,
     }
 }

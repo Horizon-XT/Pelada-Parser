@@ -11,5 +11,18 @@ fn main() {
     //    println!("{}", line)
     //}
 
-    pelada::from(raw_list);
+    let typed_pelada: pelada::PeladaType = pelada::from(raw_list);
+
+    for element in &typed_pelada.goalkeepers {
+        println!("{}", element)
+    }
+    for element in &typed_pelada.players {
+        println!("{}", element)
+    }
+    for element in &typed_pelada.guests {
+        println!("{}", element)
+    }
+    for element in &typed_pelada.kids {
+        println!("{}", element)
+    }
 }
