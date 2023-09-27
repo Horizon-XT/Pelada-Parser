@@ -13,16 +13,25 @@ fn main() {
 
     let typed_pelada: pelada::PeladaType = pelada::from(raw_list);
 
-    for element in &typed_pelada.goalkeepers {
-        println!("{}", element)
-    }
-    for element in &typed_pelada.players {
-        println!("{}", element)
-    }
-    for element in &typed_pelada.guests {
-        println!("{}", element)
-    }
-    for element in &typed_pelada.kids {
-        println!("{}", element)
+    //for element in &typed_pelada.goalkeepers {
+    //    println!("{}", element)
+    //}
+    //for element in &typed_pelada.players {
+    //    println!("{}", element)
+    //}
+    //for element in &typed_pelada.guests {
+    //    println!("{}", element)
+    //}
+    //for element in &typed_pelada.kids {
+    //    println!("{}", element)
+    //}
+
+    match typed_pelada.to_json() {
+        Ok(json) => {
+            println!("{}", json);
+        }
+        Err(_err) => {
+            println!("vishkkkkkk");
+        }
     }
 }

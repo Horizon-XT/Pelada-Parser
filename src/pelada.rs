@@ -1,3 +1,6 @@
+use serde::{Deserialize, Serialize};
+use serde_json::Result;
+
 const GOALKEEPER: [&str; 4] = ["goleiros", "goleiro", "gol", "arqueiros"];
 const PLAYER: [&str; 3] = ["jogadores", "jogador", "linha"];
 const GUEST: [&str; 8] = [
@@ -12,11 +15,20 @@ const GUEST: [&str; 8] = [
 ];
 const KID: [&str; 3] = ["sub 15", "menores", "menor"];
 
+#[derive(Serialize, Deserialize)]
 pub struct PeladaType {
     pub goalkeepers: Vec<String>,
     pub players: Vec<String>,
     pub guests: Vec<String>,
     pub kids: Vec<String>,
+}
+
+impl PeladaType {
+    pub fn to_json(&self) -> Result<String> {
+        let j = serde_json::to_string(&self)?;
+
+        Ok(j)
+    }
 }
 
 fn list_to_lower(list: Vec<String>) -> Vec<String> {
