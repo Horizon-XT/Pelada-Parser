@@ -1,17 +1,30 @@
 use std::fs;
 use std::io;
 
+use crate::application_error;
+
 fn split_extension(filename: &str) -> &str {
     let delimiter: &str = ".";
+    let invalid_input_error = application_error::ApplicationError::InvalidInput(
+        "Please, certify that you are giving a valid and readable file.".to_string(),
+    );
 
     let substrings: Vec<&str> = filename.split(delimiter).collect();
 
+    if substrings.len() < 2 {
+        panic!("{}", invalid_input_error);
+    }
+
     match substrings.last() {
         Some(extension) => {
-            return extension;
+            if extension.is_empty() {
+                panic!("{}", invalid_input_error);
+            } else {
+                return extension;
+            }
         }
         None => {
-            return "TODO";
+            panic!("{}", invalid_input_error);
         }
     }
 }
@@ -42,6 +55,7 @@ pub fn read_file(filename: &str) -> String {
     if is_valid_extension(ext) {
         return read_io(filename);
     } else {
-        panic!("Please, input a valid file! [.dat, .txt]");
+        let unsupported_file_error = application_error::ApplicationError::UnsupportedFile;
+        panic!("{}", unsupported_file_error);
     }
 }
