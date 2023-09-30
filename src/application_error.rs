@@ -6,6 +6,7 @@ pub enum ApplicationError {
     FileNotFound(String),
     InvalidInput(String),
     UnsupportedFile,
+    IOError(String),
 }
 
 impl Error for ApplicationError {}
@@ -20,6 +21,7 @@ impl fmt::Display for ApplicationError {
                 f,
                 "Given file is not supported! Please, input a valid file: [.dat, .txt]"
             ),
+            ApplicationError::IOError(msg) => write!(f, "IO Error while reading the file: {}", msg),
         }
     }
 }
