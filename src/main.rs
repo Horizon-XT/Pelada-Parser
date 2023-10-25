@@ -4,42 +4,49 @@ mod parser;
 mod pelada;
 
 fn main() {
-    let filepath: &str = "samples/sample2.dat";
+    // TODO: Pass as argument
+    let filepath: &str = "samples/sample5.dat";
 
-    let content: &str;
-    let read_file_result = &file::read_file(filepath);
-    match &read_file_result {
-        Ok(c) => {
-            content = c;
+    if file::exist(filepath) {
+        let content: &str;
+        let read_file_result = &file::read_file(filepath);
+        match &read_file_result {
+            Ok(c) => {
+                content = c;
+            }
+            Err(error) => {
+                panic!("{}", error);
+            }
         }
-        Err(error) => {
-            panic!("{}", error);
+
+        let raw_list: Vec<String> = parser::run(content);
+
+        let typed_pelada: pelada::PeladaType = pelada::from(raw_list);
+
+        for element in &typed_pelada.goalkeepers {
+            println!("{}", element)
         }
-    }
-
-    let raw_list: Vec<String> = parser::run(content);
-
-    let typed_pelada: pelada::PeladaType = pelada::from(raw_list);
-
-    for element in &typed_pelada.goalkeepers {
-        println!("{}", element)
-    }
-    for element in &typed_pelada.players {
-        println!("{}", element)
-    }
-    for element in &typed_pelada.guests {
-        println!("{}", element)
-    }
-    for element in &typed_pelada.kids {
-        println!("{}", element)
-    }
-
-    match typed_pelada.to_json() {
-        Ok(json) => {
-            println!("{}", json);
+        for element in &typed_pelada.players {
+            println!("{}", element)
         }
-        Err(_err) => {
-            println!("vishkkkkkk");
+        for element in &typed_pelada.guests {
+            println!("{}", element)
         }
+        for element in &typed_pelada.kids {
+            println!("{}", element)
+        }
+
+        match typed_pelada.to_json() {
+            Ok(json) => {
+                println!("{}", json);
+            }
+            Err(_err) => {
+                println!("vishkkkkkk");
+            }
+        }
+    } else {
+        let file_not_found_error =
+            application_error::ApplicationError::FileNotFound(filepath.to_string());
+        panic!("{}", file_not_found_error)
     }
 }

@@ -61,6 +61,21 @@ fn read_io(filename: &str) -> Result<String, application_error::ApplicationError
     }
 }
 
+pub fn exist(filename: &str) -> bool {
+    match fs::metadata(filename) {
+        Ok(metadata) => {
+            if metadata.is_file() {
+                return true;
+            }
+
+            return false;
+        }
+        Err(_) => {
+            return false;
+        }
+    }
+}
+
 pub fn read_file(filename: &str) -> Result<String, application_error::ApplicationError> {
     let unsupported_file_error = application_error::ApplicationError::UnsupportedFile;
     let ext: &str = split_extension(filename)?;

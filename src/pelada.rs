@@ -107,7 +107,7 @@ fn get_keyword_index(keyword: &String, list: &Vec<String>) -> usize {
 }
 
 fn sublist(from: &String, to: &String, list: &Vec<String>) -> Vec<String> {
-    let from_index: usize = get_keyword_index(from, list);
+    let from_index: usize = get_keyword_index(from, list) + 1;
 
     if to.is_empty() {
         return list[from_index..(list.len())].to_vec();
@@ -123,11 +123,7 @@ pub fn from(list: Vec<String>) -> PeladaType {
 
     let (gk_keyword, pl_keyword, gt_keyword, kd_keyword) = keywords(&lowered_list);
 
-    //println!("Keyword: {}", &gk_keyword);
-    //println!("Keyword: {}", &pl_keyword);
-    //println!("Keyword: {}", &gt_keyword);
-    //println!("Keyword: {}", &kd_keyword);
-
+    // TODO: Could be parallel
     let gk = sublist(&gk_keyword, &pl_keyword, &lowered_list);
     let pl = sublist(&pl_keyword, &gt_keyword, &lowered_list);
     let gt = sublist(&gt_keyword, &kd_keyword, &lowered_list);
