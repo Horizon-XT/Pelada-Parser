@@ -1,11 +1,18 @@
+use std::env;
+
 mod application_error;
+mod argument;
 mod file;
 mod parser;
 mod pelada;
 
 fn main() {
+    let args: Vec<String> = env::args().collect();
+
+    argument::parse_args(args);
+
     // TODO: Pass as argument
-    let filepath: &str = "samples/sample5.dat";
+    let filepath: &str = "samples/sample6.dat";
 
     if file::exist(filepath) {
         let content: &str;
