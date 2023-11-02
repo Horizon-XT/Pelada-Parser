@@ -3,7 +3,7 @@ use std::fmt;
 
 #[derive(Debug)]
 pub enum ApplicationError {
-    IncorrectUsage(String),
+    InvalidOperation,
     FileNotFound(String),
     InvalidInput(String),
     UnsupportedFile,
@@ -16,7 +16,7 @@ impl Error for ApplicationError {}
 impl fmt::Display for ApplicationError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            ApplicationError::IncorrectUsage(help) => write!(f, "{}", help),
+            ApplicationError::InvalidOperation => write!(f, ""),
             ApplicationError::FileNotFound(filename) => write!(f, "File: {} not found.", filename),
             ApplicationError::InvalidInput(msg) => write!(f, "Invalid input: {}", msg),
             ApplicationError::UnsupportedFile => write!(
