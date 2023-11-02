@@ -1,3 +1,4 @@
+use std::fmt;
 use std::process;
 
 //use crate::file;
@@ -7,6 +8,16 @@ pub enum OperationMode {
     API,
     Service,
     CLI,
+}
+
+impl fmt::Display for OperationMode {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            OperationMode::API => write!(f, "API"),
+            OperationMode::Service => write!(f, "Service"),
+            OperationMode::CLI => write!(f, "CLI"),
+        }
+    }
 }
 
 const OPERATIONS: [(&str, OperationMode); 3] = [
@@ -44,9 +55,16 @@ pub fn parse_args(args: Vec<String>) {
         2 => {
             let result_operation = get_operation(&args[1]);
             match result_operation {
-                Ok(_operation) => {
-                    println!("Valid operation!");
-                }
+                Ok(operation) => match operation {
+                    OperationMode::API => {
+                        println!("This case will return this tuple: ({}, {})", operation, "");
+                    }
+                    _ => {
+                        println!("[Missing file or respository]");
+                        println!("{}", HELP_MENU.to_string());
+                        process::exit(1);
+                    }
+                },
                 _ => {
                     println!("[Invalid Operation]");
                     println!("{}", HELP_MENU.to_string());
