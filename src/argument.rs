@@ -1,8 +1,8 @@
 use std::fmt;
 use std::process;
 
-//use crate::file;
 use crate::application_error;
+use crate::file;
 
 pub enum OperationMode {
     API,
@@ -61,6 +61,38 @@ pub fn parse_args(args: Vec<String>) {
                     }
                     _ => {
                         println!("[Missing file or respository]");
+                        println!("{}", HELP_MENU.to_string());
+                        process::exit(1);
+                    }
+                },
+                _ => {
+                    println!("[Invalid Operation]");
+                    println!("{}", HELP_MENU.to_string());
+                    process::exit(1);
+                }
+            }
+        }
+        3 => {
+            let result_operation = get_operation(&args[1]);
+            match result_operation {
+                Ok(operation) => match operation {
+                    OperationMode::CLI => {
+                        if file::exist(&args[2]) {
+                            println!(
+                                "This case will return this tuple: ({}, {})",
+                                operation, &args[2]
+                            );
+                        } else {
+                            println!("[Invalid file]");
+                            println!("{}", HELP_MENU.to_string());
+                            process::exit(1);
+                        }
+                    }
+                    OperationMode::Service => {
+                        println!("Service message TODO");
+                    }
+                    OperationMode::API => {
+                        println!("[API Mode doesn't require an input]");
                         println!("{}", HELP_MENU.to_string());
                         process::exit(1);
                     }
