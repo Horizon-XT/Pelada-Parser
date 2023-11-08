@@ -9,7 +9,9 @@ mod pelada;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    argument::parse_args(args);
+    let (operation, input) = argument::parse_args(args);
+
+    println!("[MAIN] Operation: {} | Input: {}", operation, input);
 
     // TODO: Pass as argument
     let filepath: &str = "samples/sample6.dat";

@@ -43,7 +43,7 @@ fn get_operation(command: &str) -> Result<OperationMode, application_error::Appl
     Err(invalid_operation)
 }
 
-pub fn parse_args(args: Vec<String>) {
+pub fn parse_args(args: Vec<String>) -> (OperationMode, String) {
     let argc: usize = args.len();
 
     match argc {
@@ -56,9 +56,7 @@ pub fn parse_args(args: Vec<String>) {
             let result_operation = get_operation(&args[1]);
             match result_operation {
                 Ok(operation) => match operation {
-                    OperationMode::API => {
-                        println!("This case will return this tuple: ({}, {})", operation, "");
-                    }
+                    OperationMode::API => (operation, "".to_string()),
                     _ => {
                         println!("[Missing file or respository]");
                         println!("{}", HELP_MENU.to_string());
@@ -74,14 +72,12 @@ pub fn parse_args(args: Vec<String>) {
         }
         3 => {
             let result_operation = get_operation(&args[1]);
+            let input = args[2].clone();
             match result_operation {
                 Ok(operation) => match operation {
                     OperationMode::CLI => {
-                        if file::exist(&args[2]) {
-                            println!(
-                                "This case will return this tuple: ({}, {})",
-                                operation, &args[2]
-                            );
+                        if file::exist(&input) {
+                            (operation, input)
                         } else {
                             println!("[Invalid file]");
                             println!("{}", HELP_MENU.to_string());
@@ -89,7 +85,8 @@ pub fn parse_args(args: Vec<String>) {
                         }
                     }
                     OperationMode::Service => {
-                        println!("Service message TODO");
+                        //TODO Check if it is a directory
+                        (operation, input)
                     }
                     OperationMode::API => {
                         println!("[API Mode doesn't require an input]");
