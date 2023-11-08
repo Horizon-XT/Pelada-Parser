@@ -4,7 +4,6 @@ use std::fmt;
 #[derive(Debug)]
 pub enum ApplicationError {
     InvalidOperation,
-    FileNotFound(String),
     InvalidInput(String),
     UnsupportedFile,
     IOError(String),
@@ -17,7 +16,6 @@ impl fmt::Display for ApplicationError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             ApplicationError::InvalidOperation => write!(f, ""),
-            ApplicationError::FileNotFound(filename) => write!(f, "File: {} not found.", filename),
             ApplicationError::InvalidInput(msg) => write!(f, "Invalid input: {}", msg),
             ApplicationError::UnsupportedFile => write!(
                 f,

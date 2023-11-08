@@ -48,7 +48,7 @@ pub fn parse_args(args: Vec<String>) -> (OperationMode, String) {
 
     match argc {
         1 => {
-            println!("[No execution mode selected]");
+            println!("\n[No execution mode selected]");
             println!("{}", HELP_MENU.to_string());
             process::exit(1);
         }
@@ -58,13 +58,13 @@ pub fn parse_args(args: Vec<String>) -> (OperationMode, String) {
                 Ok(operation) => match operation {
                     OperationMode::API => (operation, "".to_string()),
                     _ => {
-                        println!("[Missing file or respository]");
+                        println!("\n[Missing file or respository]");
                         println!("{}", HELP_MENU.to_string());
                         process::exit(1);
                     }
                 },
                 _ => {
-                    println!("[Invalid Operation]");
+                    println!("\n[Invalid Operation]");
                     println!("{}", HELP_MENU.to_string());
                     process::exit(1);
                 }
@@ -79,7 +79,7 @@ pub fn parse_args(args: Vec<String>) -> (OperationMode, String) {
                         if file::exist(&input) {
                             (operation, input)
                         } else {
-                            println!("[Invalid file]");
+                            println!("\n[Invalid file]");
                             println!("{}", HELP_MENU.to_string());
                             process::exit(1);
                         }
@@ -89,13 +89,13 @@ pub fn parse_args(args: Vec<String>) -> (OperationMode, String) {
                         (operation, input)
                     }
                     OperationMode::API => {
-                        println!("[API Mode doesn't require an input]");
+                        println!("\n[API Mode doesn't require an input]");
                         println!("{}", HELP_MENU.to_string());
                         process::exit(1);
                     }
                 },
                 _ => {
-                    println!("[Invalid Operation]");
+                    println!("\n[Invalid Operation]");
                     println!("{}", HELP_MENU.to_string());
                     process::exit(1);
                 }
