@@ -86,3 +86,12 @@ pub fn read_file(filename: &str) -> Result<String, application_error::Applicatio
         return Err(unsupported_file_error);
     }
 }
+
+pub fn write_file(json: String) {
+    let filename: &str = "pelada.json";
+
+    match fs::write(filename, json) {
+        Ok(_) => println!("JSON written successfully."),
+        Err(_) => println!("Could not write JSON file"),
+    }
+}
