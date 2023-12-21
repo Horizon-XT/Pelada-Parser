@@ -21,3 +21,44 @@ Start as CLI:
 ```bash
 cargo run -- --cli <filepath>
 ```
+### Sample of an expected pattern to parse
+```text
+⚽PELADA dia 30/10/23 as 19:30hs no LOCAL🥅
+
+Goleiros:
+1.
+2.
+3.
+
+Linha:
+1.
+2.
+3.
+4.
+5.
+6.
+7.
+8.
+9. 
+10.
+11.
+12.
+13.
+14.
+15.
+
+Suplentes/Convidados:
+1.
+2.
+3.
+
+Sub 15:
+1.
+2.
+3.
+4.
+5.
+
+```
+
+Check `samples` to see more.
