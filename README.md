@@ -6,7 +6,14 @@ this project exist for 2 reasons:
 
 ##  Install
 
-For now just clone the repo.
+### With Zsh
+1. Clone the repo.
+2. Run `install.sh`
+
+### Without Zsh
+1. Clone the repo
+2. Run `cargo build --release`
+3. Add the binary to your path
 
 ## Usage
 
