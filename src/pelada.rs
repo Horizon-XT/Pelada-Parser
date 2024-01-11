@@ -99,11 +99,50 @@ fn get_keyword_index(keyword_opt: &Option<String>, list: &Vec<String>) -> Option
     }
 }
 
-fn sublist(from: Option<usize>, to: Option<usize>, list: &Vec<String>) -> Vec<String> {
-    match (from, to) {
-        (Some(from_index), Some(to_index)) => return list[from_index..to_index].to_vec(),
-        (Some(from_index), None) => return list[from_index..(list.len())].to_vec(),
-        (None, _) => return [].to_vec(),
+fn index_predicate(to: &usize, index_opt: Option<usize>) -> bool {
+    match index_opt {
+        Some(index) => return &index != to,
+        None => false,
+    }
+}
+
+fn sublist(
+    from: usize,
+    keywords_indices: &Vec<Option<usize>>,
+    pelada_list: &Vec<String>,
+) -> Vec<String> {
+    let from_index: usize;
+
+    // TODO Improve this...
+    match keywords_indices.get(from) {
+        Some(index_opt) => match index_opt {
+            Some(index) => {
+                from_index = *index;
+            }
+            None => return [].to_vec(),
+        },
+        None => return [].to_vec(),
+    }
+
+    let keywords_indices_len: usize = keywords_indices.len();
+    let to: usize = from_index + 1;
+
+    if to >= keywords_indices_len {
+        return pelada_list[from_index..(pelada_list.len())].to_vec();
+    }
+
+    let binding = keywords_indices[to..keywords_indices_len].to_vec();
+    let to_index_search_result = binding
+        .iter()
+        .find(|&&index_opt| index_predicate(&to, index_opt));
+
+    match to_index_search_result {
+        // TODO Improve this as well...
+        Some(to_index_opt) => match to_index_opt {
+            Some(to_index) => return pelada_list[from_index..*to_index].to_vec(),
+            None => return pelada_list[from_index..(pelada_list.len())].to_vec(),
+        },
+        None => return pelada_list[from_index..(pelada_list.len())].to_vec(),
     }
 }
 
@@ -120,10 +159,10 @@ pub fn from(list: Vec<String>) -> PeladaType {
         .collect();
 
     // TODO: Could be parallel
-    let gk = sublist(Some(1), Some(2), &lowered_list);
-    let pl = sublist(Some(2), Some(3), &lowered_list);
-    let gt = sublist(Some(3), Some(4), &lowered_list);
-    let kd = sublist(Some(4), None, &lowered_list);
+    let gk = sublist(0, &indices, &lowered_list);
+    let pl = sublist(1, &indices, &lowered_list);
+    let gt = sublist(2, &indices, &lowered_list);
+    let kd = sublist(3, &indices, &lowered_list);
 
     PeladaType {
         goalkeepers: gk,
