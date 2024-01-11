@@ -4,6 +4,7 @@ use std::str::Lines;
 fn pre_process(raw_content: Lines) -> Vec<String> {
     raw_content
         .map(|line| -> String {
+            // TODO: Improve this, try to chaining the operations
             let no_check_emoji_name: String = line.replace("✅", "");
 
             let no_x_emoji_name: String = no_check_emoji_name.replace("❌", "");
